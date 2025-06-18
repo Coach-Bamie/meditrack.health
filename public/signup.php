@@ -1,6 +1,45 @@
 <?php 
 session_start();
-?>
+
+
+    $host = "sql5.freesqldatabase.com";
+       $user = "sql5785527";
+       $password = "uKpayAenyd";  
+        $db = "sql5785527";
+
+    $conn = mysqli_connect($host, $user, $password, $db);
+    if (!$conn) {
+        die("Connection failed: ");
+    }
+
+    if(isset($_POST['signup'])) {
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $usertype = $_POST['role'];
+        $passwordd = password_hash($password, PASSWORD_DEFAULT); // Hash the password for security
+       // $password = password_hash($password, PASSWORD_BCRYPT); // Hash the password for security
+
+
+        $sql=("INSERT INTO user (full_name, email, phone, address, username, password, usertype) VALUES ('$fullname', '$email', '$phone', '$address', '$username', '$password', '$usertype')");
+        $result = mysqli_query($conn, $sql);
+
+        if($result){
+          $_SESSION["signupmessage"] = " Your account has been created successfully. You can now log in.";
+
+          header("Location: login.php"); // Redirect to login page after successful registration
+          exit();
+
+        }else{
+          echo "User Registration Failed: ";
+        }
+    }
+    
+    ?>
+
 <!-- signup.html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -75,43 +114,3 @@ session_start();
   </div>
 </body>
 </html>
-
-<?php
-
-    $host = "sql5.freesqldatabase.com";
-       $user = "sql5785527";
-       $password = "uKpayAenyd";  
-        $db = "sql5785527";
-
-    $conn = mysqli_connect($host, $user, $password, $db);
-    if (!$conn) {
-        die("Connection failed: ");
-    }
-
-    if(isset($_POST['signup'])) {
-        $fullname = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $usertype = $_POST['role'];
-        $passwordd = password_hash($password, PASSWORD_DEFAULT); // Hash the password for security
-       // $password = password_hash($password, PASSWORD_BCRYPT); // Hash the password for security
-
-
-        $sql=("INSERT INTO user (full_name, email, phone, address, username, password, usertype) VALUES ('$fullname', '$email', '$phone', '$address', '$username', '$password', '$usertype')");
-        $result = mysqli_query($conn, $sql);
-
-        if($result){
-          $_SESSION["signupmessage"] = " Your account has been created successfully. You can now log in.";
-
-          header("Location: login.php"); // Redirect to login page after successful registration
-          exit();
-
-        }else{
-          echo "User Registration Failed: ";
-        }
-    }
-    
-    ?>
