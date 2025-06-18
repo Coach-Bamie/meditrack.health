@@ -78,10 +78,10 @@ session_start();
 
 <?php
 
-    $host = 'localhost';
-    $username = 'root';
-    $password = '';
-    $db = 'meditrack';
+    $host = "sql5.freesqldatabase.com";
+       $user = "sql5785527";
+       $password = "uKpayAenyd";  
+        $db = "sql5785527";
 
     $conn = mysqli_connect($host, $username, $password, $db);
     if (!$conn) {
