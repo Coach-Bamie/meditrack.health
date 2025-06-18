@@ -83,7 +83,7 @@ session_start();
        $password = "uKpayAenyd";  
         $db = "sql5785527";
 
-    $conn = mysqli_connect($host, $username, $password, $db);
+    $conn = mysqli_connect($host, $user, $password, $db);
     if (!$conn) {
         die("Connection failed: ");
     }
