@@ -10,6 +10,65 @@
         $message = "";
       }     
 ?>
+
+<?php 
+        error_reporting(0);
+
+       $host = "sql5.freesqldatabase.com";
+       $user = "sql5785527";
+       $password = "uKpayAenyd";  
+        $db = "sql5785527";
+
+        $conn = mysqli_connect($host, $user, $password, $db);
+
+
+   
+ if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $username = $_POST["username"];
+      $password = $_POST["password"];
+
+      
+    
+      $sql = "SELECT * FROM `user` WHERE `username` = '$username' AND `password` = '$password'";
+      $result = mysqli_query($conn, $sql);
+      $row =mysqli_fetch_array($result);
+
+      if($row["usertype"] == "admin"){
+
+        $_SESSION["username"] = $username;
+        $_SESSION["usertype"] = "admin";
+        header("Location: admin-dash.php");
+
+      } elseif($row["usertype"] == "doctor"){
+        $_SESSION["username"] = $username;
+         $_SESSION["usertype"] = "doctor";
+        header("Location: docdash.php");
+
+      } elseif($row["usertype"] == "patient"){
+        $_SESSION["username"] = $username;
+         $_SESSION["usertype"] = "patient ";
+        header("Location: patient-dash.php");
+
+      }
+      elseif($row["usertype"] == "nurse"){
+        $_SESSION["username"] = $username;
+         $_SESSION["usertype"] = "nurse ";
+        header("Location: nurse-dash.php");
+
+      } else {
+
+        session_start();
+       
+        $message = "Invalid username or password!!!";
+
+        $_SESSION["loginMessage"] = $message;
+        header("Location: login.php");
+      }
+
+   }
+
+?>
+
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -93,60 +152,3 @@
 </body>
 </html>
 
-<?php 
-        error_reporting(0);
-
-       $host = "sql5.freesqldatabase.com";
-       $user = "sql5785527";
-       $password = "uKpayAenyd";  
-        $db = "sql5785527";
-
-        $conn = mysqli_connect($host, $user, $password, $db);
-
-
-   
- if($_SERVER["REQUEST_METHOD"] == "POST"){
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-
-      
-    
-      $sql = "SELECT * FROM `user` WHERE `username` = '$username' AND `password` = '$password'";
-      $result = mysqli_query($conn, $sql);
-      $row =mysqli_fetch_array($result);
-
-      if($row["usertype"] == "admin"){
-
-        $_SESSION["username"] = $username;
-        $_SESSION["usertype"] = "admin";
-        header("Location: admin-dash.php");
-
-      } elseif($row["usertype"] == "doctor"){
-        $_SESSION["username"] = $username;
-         $_SESSION["usertype"] = "doctor";
-        header("Location: docdash.php");
-
-      } elseif($row["usertype"] == "patient"){
-        $_SESSION["username"] = $username;
-         $_SESSION["usertype"] = "patient ";
-        header("Location: patient-dash.php");
-
-      }
-      elseif($row["usertype"] == "nurse"){
-        $_SESSION["username"] = $username;
-         $_SESSION["usertype"] = "nurse ";
-        header("Location: nurse-dash.php");
-
-      } else {
-
-        session_start();
-       
-        $message = "Invalid username or password!!!";
-
-        $_SESSION["loginMessage"] = $message;
-        header("Location: login.php");
-      }
-
-   }
-
-?>
