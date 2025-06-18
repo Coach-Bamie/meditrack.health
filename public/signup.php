@@ -54,7 +54,8 @@ session_start();
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
     }
     .signup-box {
       background: #fff;
