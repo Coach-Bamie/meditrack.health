@@ -9,9 +9,7 @@
       } else {
         $message = "";
       }     
-?>
 
-<?php 
         error_reporting(0);
 
        $host = "sql5.freesqldatabase.com";
